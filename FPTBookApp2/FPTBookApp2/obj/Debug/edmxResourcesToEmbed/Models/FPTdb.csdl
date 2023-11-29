@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FPTdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="AccID" />
+    </Key>
+    <Property Name="AccID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="pass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="tel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="state" Type="Int32" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__AccID__778AC167" FromRole="Account" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="author">
+    <Key>
+      <PropertyRef Name="auID" />
+    </Key>
+    <Property Name="auID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="auName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="auImage" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="auDes" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="products" Relationship="Self.FK__product__auID__2A4B4B5E" FromRole="author" ToRole="product" />
+  </EntityType>
+  <EntityType Name="category">
+    <Key>
+      <PropertyRef Name="CatID" />
+    </Key>
+    <Property Name="CatID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CatName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CatDes" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="products" Relationship="Self.FK__product__CatID__29572725" FromRole="category" ToRole="product" />
+  </EntityType>
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="price" Type="Int32" Nullable="false" />
+    <Property Name="qty" Type="Int32" Nullable="false" />
+    <Property Name="OrderID" Type="Int32" />
+    <NavigationProperty Name="product" Relationship="Self.FK__OrderDeta__ProID__73BA3083" FromRole="OrderDetails" ToRole="product" />
+    <NavigationProperty Name="Order" Relationship="Self.fk_Order" FromRole="OrderDetails" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Orderdate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="AccID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Account" Relationship="Self.FK__Orders__AccID__778AC167" FromRole="Orders" ToRole="Account" />
+    <NavigationProperty Name="OrderDetails" Relationship="Self.fk_Order" FromRole="Orders" ToRole="OrderDetails" />
+  </EntityType>
+  <EntityType Name="product">
+    <Key>
+      <PropertyRef Name="ProID" />
+    </Key>
+    <Property Name="ProID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProImage" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProPrice" Type="Int32" Nullable="false" />
+    <Property Name="ProQty" Type="Int32" Nullable="false" />
+    <Property Name="ProDes" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="CatID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="auID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="author" Relationship="Self.FK__product__auID__2A4B4B5E" FromRole="product" ToRole="author" />
+    <NavigationProperty Name="category" Relationship="Self.FK__product__CatID__29572725" FromRole="product" ToRole="category" />
+    <NavigationProperty Name="OrderDetails" Relationship="Self.FK__OrderDeta__ProID__73BA3083" FromRole="product" ToRole="OrderDetails" />
+  </EntityType>
+  <Association Name="FK__Orders__AccID__778AC167">
+    <End Role="Account" Type="Self.Account" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="AccID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="AccID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__product__auID__2A4B4B5E">
+    <End Role="author" Type="Self.author" Multiplicity="1" />
+    <End Role="product" Type="Self.product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="author">
+        <PropertyRef Name="auID" />
+      </Principal>
+      <Dependent Role="product">
+        <PropertyRef Name="auID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__product__CatID__29572725">
+    <End Role="category" Type="Self.category" Multiplicity="1" />
+    <End Role="product" Type="Self.product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="category">
+        <PropertyRef Name="CatID" />
+      </Principal>
+      <Dependent Role="product">
+        <PropertyRef Name="CatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OrderDeta__ProID__73BA3083">
+    <End Role="product" Type="Self.product" Multiplicity="1" />
+    <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product">
+        <PropertyRef Name="ProID" />
+      </Principal>
+      <Dependent Role="OrderDetails">
+        <PropertyRef Name="ProID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Order">
+    <End Role="Orders" Type="Self.Order" Multiplicity="0..1" />
+    <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="OrderDetails">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FPTdbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Accounts" EntityType="Self.Account" />
+    <EntitySet Name="authors" EntityType="Self.author" />
+    <EntitySet Name="categories" EntityType="Self.category" />
+    <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
+    <EntitySet Name="Orders" EntityType="Self.Order" />
+    <EntitySet Name="products" EntityType="Self.product" />
+    <AssociationSet Name="FK__Orders__AccID__778AC167" Association="Self.FK__Orders__AccID__778AC167">
+      <End Role="Account" EntitySet="Accounts" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__product__auID__2A4B4B5E" Association="Self.FK__product__auID__2A4B4B5E">
+      <End Role="author" EntitySet="authors" />
+      <End Role="product" EntitySet="products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__product__CatID__29572725" Association="Self.FK__product__CatID__29572725">
+      <End Role="category" EntitySet="categories" />
+      <End Role="product" EntitySet="products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderDeta__ProID__73BA3083" Association="Self.FK__OrderDeta__ProID__73BA3083">
+      <End Role="product" EntitySet="products" />
+      <End Role="OrderDetails" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Order" Association="Self.fk_Order">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="OrderDetails" EntitySet="OrderDetails" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

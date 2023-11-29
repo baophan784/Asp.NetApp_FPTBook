@@ -1,0 +1,16 @@
+﻿@model IEnumerable<FPTBookApp2.Models.category>
+<li>
+    <div class="dropdowna">
+        <button class="dropbtna">
+            Product
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-contenta">
+            @foreach (var item in Model)
+            {
+                <a href="@Url.Action("Sortbycat","Home", new {id = item.CatID})">@Html.DisplayFor(m => item.CatName)</a>
+            }
+        </div>
+
+    </div>
+</li>

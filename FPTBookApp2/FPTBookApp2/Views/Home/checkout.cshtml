@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "checkout";
+}
+<h2>Checkout</h2>
+@if (TempData["cart"] != null)
+{
+    int total = 0;
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>NAME</th>
+                <th>PRICE</th>
+                <th>QUANTITY</th>
+                <th>BILL</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in TempData["cart"] as List<FPTBookApp2.Models.product>)
+            {
+                int bill = @item.ProPrice * @item.ProQty;
+                <tr>
+                    <td>@item.ProName</td>
+                    <td>@item.ProPrice</td>
+                    <td>@Html.EditorFor(qty => item.ProQty)&emsp;<a href="@Url.Action("deleteItem","Home", new {id =item.ProID })"><span class="glyphicon glyphicon-trash"></span></a></td>
+                    <td>@bill</td>
+                </tr>
+                total += bill;
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="3" align="right"><b>Total</b></td>
+                <td>@total</td>
+            </tr>
+        </tfoot>
+    </table>
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-success">@Html.ActionLink("Continue Shopping", "Index", "Home")</button>
+            @if (Session["fullname"] == null)
+            {
+                <a href="@Url.Action("Login","Accounts")" class="btn btn-primary pull-right">@Html.Label("Please login before check out !!!")</a>
+            }
+            else
+            {
+                <a href="@Url.Action("Confirm","Home")" class="btn btn-primary pull-right">Next</a>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <h3>Cart is empty</h3>
+}

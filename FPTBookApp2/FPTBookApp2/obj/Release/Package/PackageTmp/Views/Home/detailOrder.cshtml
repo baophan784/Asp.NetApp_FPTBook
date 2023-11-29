@@ -1,0 +1,46 @@
+﻿@model IEnumerable<FPTBookApp2.Models.OrderDetail>
+@{
+    ViewBag.Title = "detailOrder";
+}
+
+<h2>detailOrder</h2>
+<table class="table table-responsive">
+
+    <thead>
+        <tr>
+            <th align="center">Order ID</th>
+            <th align="center">Product ID</th>
+            <th align="center">Price</th>
+            <th align="center">Quantity</th>
+            <th align="center">Sub Total</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @{ int total = 0;} 
+        @foreach (var item in Model)
+        {
+            int stotal = item.price * item.qty;
+            <tr>
+                <td align="center">@Html.DisplayFor(x => item.OrderID)</td>
+                <td align="center">@Html.DisplayFor(x => item.product.ProName)</td>
+                <td align="center">@Html.DisplayFor(x => item.price)</td>
+                <td align="center">@Html.DisplayFor(x => item.qty)</td>
+                <td align="center">@Html.DisplayFor(x => stotal)</td>
+
+            </tr>
+            total += stotal;
+        }
+
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="5">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="4" align="right"><b>Total</b></td>
+            <td>@total</td>
+        </tr>
+    </tfoot>
+</table>
+

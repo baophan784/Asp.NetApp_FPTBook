@@ -1,0 +1,62 @@
+﻿@model IEnumerable<FPTBookApp2.Models.author>
+@{
+    ViewBag.Title = "Index";
+}
+<script type="text/javascript">
+
+    function() {
+        $('#alertBox').removeClass('hidden');
+        $('#alertBox').delay(1000).slideUp(500);
+
+    }
+</script>
+@if (TempData["AlertMessage"] != null)
+{
+    <div id="alertBox" class="alert alert-danger">
+        @TempData["AlertMessage"]
+
+    </div>
+}
+<h2>Index</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.auName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.auImage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.auDes)
+        </th>
+        <th>
+        </th>
+        <th>
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.auName)
+            </td>
+            <td>
+                <img src="~/Image/@Html.DisplayFor(modelItem => item.auImage)" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.auDes)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.auID })                
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { id = item.auID }, new { onclick = "return confirm('Are you sure?');" })
+            </td>
+        </tr>
+    }
+
+</table>

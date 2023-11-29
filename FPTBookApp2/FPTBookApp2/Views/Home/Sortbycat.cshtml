@@ -1,0 +1,40 @@
+﻿@model IEnumerable<FPTBookApp2.Models.product>
+@{
+    ViewBag.Title = "Sortbycat";
+}
+
+
+<div class="row">
+    <div class="col-2">
+        <h1>FPTBook<br>The teacher of youth</h1>
+        <p>Behind the success of a man, is the figure of a woman. And behind anyone's success is at least one book, or a shelf of books..</p>
+        <a href="" class="btn">Explore Now &#8594;</a>
+    </div>
+    <div class="col-2">
+        <img src="~/Image/banner.png" border-radius:30px, height="400px" , width="500px" />
+    </div>
+</div>
+
+            </div>
+            </div>
+
+<h2 class="title">Latest Products</h2>
+<div class="row">
+    @if (Model == null)
+    {
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+            <div class="col-4">
+                <img src="~/Image/@Html.DisplayFor(modelitem => item.ProImage)" width="200" height="300">
+                <h4>@Html.DisplayFor(modelitem => item.ProName)</h4>
+                <p>@Html.DisplayFor(modelitem => item.ProPrice) $</p>
+                <button class="btn"> @Html.ActionLink("View Detail", "AddtoCart", new { id = item.ProID })</button>
+            </div>
+        }
+    }
+
+
+</div>

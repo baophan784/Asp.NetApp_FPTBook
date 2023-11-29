@@ -1,0 +1,41 @@
+﻿@model IEnumerable<FPTBookApp2.Models.category>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CatName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CatDes)
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.CatName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CatDes)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.CatID })
+    </td>
+    <td>
+        @Html.ActionLink("Delete", "Delete", new { id = item.CatID }, new { onclick = "return confirm('Are you sure?');" })
+    </td>
+</tr>
+}
+
+</table>

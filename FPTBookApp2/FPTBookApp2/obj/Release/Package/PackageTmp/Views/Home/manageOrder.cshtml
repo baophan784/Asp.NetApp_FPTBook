@@ -1,0 +1,28 @@
+﻿@model IEnumerable<FPTBookApp2.Models.Order>
+@{
+    ViewBag.Title = "manageOrder";
+}
+
+<h2>My Order</h2>
+<table class="table table-responsive">
+
+    <thead>
+        <tr>
+            <th align="center">Order ID</th>
+            <th align="center">Order Date</th>
+            <th align="center">View detail</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+           
+        <tr>
+            <td align="center">@Html.DisplayFor(x => item.OrderID)</td>
+            <td align="center">@Html.DisplayFor(x => item.Orderdate)</td>
+            <td align="center"><a href="@Url.Action("detailOrder", "Home", new { id=item.OrderID })"><span class="glyphicon glyphicon-file"></span></a></td>
+        </tr>
+        }
+
+    </tbody>
+    </table>

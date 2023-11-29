@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - FPTBook Applicaiont</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/style.css")
+    <script language="javascript">
+        function Confirm() {
+            if (!window.confirm('Are you sure?')) {
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">
+
+                    <img src="~/Image/logo.png" width="170px" , height="85px" />
+                </div>
+                <nav class="navbar navbar-light bg-light">
+                    <div class="form-inline">
+                        @using (Html.BeginForm("Search", "Home"))
+                        {
+                        <p>
+                            <input class="form-control mr-sm-2" name="searchString" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </p>
+                        }
+                    </div>
+                    
+                </nav>
+                <nav>
+                    <ul id="MenuItems">
+                        <li>
+                            @Html.ActionLink("Home", "Index", "Home")
+                        </li>
+                        @Html.Action("Nav", "Home")
+                        @if (Convert.ToInt32(Session["state"]) == 1)
+                        {
+                            <li>
+                                <div class="dropdowna">
+                                    <button class="dropbtna">
+                                        Management
+                                        <i class="fa fa-caret-down"></i>
+                                    </button>
+                                    <div class="dropdown-contenta">
+                                        @Html.ActionLink("Manage Categories", "Index", "categories")
+                                        @Html.ActionLink("Manage Products", "Index", "products")
+                                        @Html.ActionLink("Manage Authors", "Index", "authors")
+                                        @Html.ActionLink("Manage Order", "orderAdmin", "Home")
+
+                                    </div>
+
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+
+                        }
+
+
+                        @if (Session["fullname"] == null)
+                        {
+
+                            <li>@Html.ActionLink("Login", "Login", "Accounts", null, htmlAttributes: new { @class = "glyphicon glyphicon-user" })</li>
+                            <li>@Html.ActionLink("Register", "Register", "Accounts", null, htmlAttributes: new { @class = "glyphicon glyphicon-plus" })</li>
+
+                        }
+                        else
+                        {
+                            <li>
+
+                                <div class="dropdowna">
+                                    <button class="dropbtna">
+                                        Hi, @Session["fullname"]
+                                        <i class="fa fa-caret-down"></i>
+                                    </button>
+                                    <div class="dropdown-contenta">
+                                        @Html.ActionLink("Update profile", "updateProfile", "Accounts", new { id = Convert.ToString(Session["accid"]) }, null)
+                                        @if (Convert.ToInt32(Session["state"]) != 1)
+                                        {
+                                            @Html.ActionLink("My Orders", "manageOrder", "Home")
+                                        }
+
+
+                                    </div>
+
+                                </div>
+                            </li>
+                            <li>@Html.ActionLink("Logout", "Logout", "Accounts")</li>
+
+                        }
+
+                       <li><a href="@Url.Action("checkout", "Home")">
+    <img src="~/Image/cart.png" width="30px" height="30px" /></a></li> 
+                    </ul>
+                </nav>
+                
+                <img src="images/menu.png" class="menu-icon"
+                     onclick="menutoggle()">
+            </div>
+                <div class="container body-content">
+                    @RenderBody()
+                    <hr />
+                    <footer class="container row">
+                        <p>&copy; @DateTime.Now.Year - FPTBook Application</p>
+                    </footer>
+                </div>
+
+                @Scripts.Render("~/bundles/jquery")
+                @Scripts.Render("~/bundles/bootstrap")
+                @RenderSection("scripts", required: false)
+    </body>
+</html>

@@ -1,0 +1,80 @@
+﻿@model FPTBookApp2.Models.product
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProImage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProImage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProQty)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProQty)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProDes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProDes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.author.auName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.author.auName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.category.CatName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.category.CatName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

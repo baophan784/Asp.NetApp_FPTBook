@@ -1,0 +1,78 @@
+﻿@model IEnumerable<FPTBookApp2.Models.product>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@if (Session["imgErr"] != null)
+{
+    <div id="alertBox" class="alert alert-danger">
+        @Session["imgErr"]
+
+    </div>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProImage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProQty)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProDes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.author.auName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.category.CatName)
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProName)
+            </td>
+            <td>
+                <img src="~/Image/@Html.DisplayFor(modelitem => item.ProImage)" width="70px" height="100px" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProQty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProDes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.author.auName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.category.CatName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ProID })
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { id = item.ProID }, new { onclick = "return confirm('Are you sure?');" })
+            </td>
+        </tr>
+    }
+
+</table>
